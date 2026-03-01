@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestión CAP — Detalle</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230f1d36'/><text x='50%25' y='55%25' text-anchor='middle' dominant-baseline='middle' font-size='16' fill='%23c8a951' font-weight='bold'>G</text></svg>">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap');
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}body{font-family:'DM Sans',sans-serif;color:#1e2738;background:#f7f8fa;min-height:100vh;-webkit-font-smoothing:antialiased;line-height:1.6}a{color:#274a82;text-decoration:none;transition:all .3s ease}a:hover{color:#c8a951}h1,h2,h3{font-family:'Playfair Display',serif;color:#0f1d36;line-height:1.2}
+    .app-layout{display:flex;min-height:100vh}.sidebar{width:255px;background:linear-gradient(180deg,#0f1d36,#080e1a);color:#fff;display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100;transition:all .3s ease;border-right:1px solid rgba(255,255,255,.05)}.sidebar-header{padding:1.35rem 1.2rem;border-bottom:1px solid rgba(255,255,255,.06)}.brand{display:flex;align-items:center;gap:.7rem}.brand-icon{width:36px;height:36px;background:linear-gradient(135deg,#c8a951,#8a6d1e);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;font-weight:800;color:#fff;font-family:'Playfair Display',serif}.brand-text{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700}.brand-zone{font-size:.68rem;color:#d9bf6e;text-transform:uppercase;letter-spacing:.1em}.sidebar-nav{flex:1;padding:.75rem .65rem;overflow-y:auto}.nav-section-title{font-size:.68rem;text-transform:uppercase;letter-spacing:.12em;color:rgba(255,255,255,.25);padding:.85rem .75rem .4rem;font-weight:600}.nav-item{display:flex;align-items:center;gap:.7rem;padding:.65rem .75rem;border-radius:8px;color:rgba(255,255,255,.55);font-size:.88rem;font-weight:500;transition:all .3s ease;margin-bottom:2px}.nav-item:hover{background:rgba(255,255,255,.05);color:rgba(255,255,255,.9)}.nav-item.active{background:rgba(200,169,81,.12);color:#d9bf6e;font-weight:600}.nav-icon{font-size:1.1rem;width:22px;text-align:center}.sidebar-footer{padding:1rem 1.2rem;border-top:1px solid rgba(255,255,255,.06)}.sidebar-user{display:flex;align-items:center;gap:.65rem}.avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#274a82,#3562a8);display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700;color:#fff}.user-info{flex:1;min-width:0}.user-name{font-size:.82rem;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.user-role{font-size:.7rem;color:rgba(255,255,255,.35)}.btn-logout-s{background:none;border:none;color:rgba(255,255,255,.3);cursor:pointer;font-size:1.05rem;padding:.3rem;border-radius:8px}.btn-logout-s:hover{color:#d43535}
+    .main-content{flex:1;margin-left:255px;min-height:100vh}.top-header{background:#fff;border-bottom:1px solid #eceef3;padding:.9rem 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;box-shadow:0 1px 2px rgba(15,29,54,.05)}.page-title{font-size:1.25rem;color:#0f1d36}.page-breadcrumb{font-size:.77rem;color:#8892a4}.mobile-menu-btn{display:none;background:none;border:none;font-size:1.4rem;color:#0f1d36;cursor:pointer}.page-content{padding:1.75rem 2rem}
+    .card{background:#fff;border-radius:12px;border:1px solid #eceef3;box-shadow:0 1px 2px rgba(15,29,54,.05)}.card-header{padding:1.1rem 1.4rem;border-bottom:1px solid #eceef3;display:flex;align-items:center;justify-content:space-between}.card-header h3{font-size:1.05rem}.card-body{padding:1.4rem}
+    .badge-st{display:inline-flex;align-items:center;gap:.3rem;padding:.25rem .7rem;border-radius:28px;font-size:.76rem;font-weight:600}.badge-st::before{content:'';width:6px;height:6px;border-radius:50%;background:currentColor}.badge-st.pendiente{background:#fff8e5;color:#b8860b}.badge-st.aprobado{background:#ecfdf3;color:#0d9f4f}.badge-st.rechazado{background:#fef1f1;color:#d43535}.badge-st.en-revision{background:#eef4ff;color:#2567d8}
+    .detail-grid{display:grid;grid-template-columns:1.8fr 1fr;gap:1.35rem}
+    .info-row{display:flex;padding:.75rem 0;border-bottom:1px solid #eceef3}.info-label{width:140px;flex-shrink:0;font-weight:600;color:#64707f;font-size:.82rem}.info-value{flex:1;color:#374050;font-size:.9rem}
+    .timeline{position:relative;padding-left:1.6rem}.timeline::before{content:'';position:absolute;left:6px;top:0;bottom:0;width:2px;background:#d8dce5}.tl-item{position:relative;padding-bottom:1.15rem}.tl-item::before{content:'';position:absolute;left:-1.6rem;top:3px;width:10px;height:10px;border-radius:50%;background:#1e3a66;border:2px solid #fff;box-shadow:0 0 0 2px #1e3a66}.tl-date{font-size:.72rem;color:#8892a4;margin-bottom:.15rem}.tl-text{font-size:.85rem;color:#4a5568}
+    .file-item{display:flex;align-items:center;gap:.65rem;padding:.55rem .7rem;background:#f7f8fa;border-radius:8px;margin-bottom:.4rem;font-size:.82rem}.file-name{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.7rem 1.4rem;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:600;cursor:pointer;border:none;transition:all .3s ease;text-decoration:none;white-space:nowrap}.btn:disabled{opacity:.55}.btn-outline{background:transparent;border:1.5px solid #d8dce5;color:#4a5568}.btn-outline:hover{border-color:#3562a8;color:#1e3a66}.btn-success{background:#0d9f4f;color:#fff}.btn-success:hover{background:#0a8340}.btn-danger{background:#d43535;color:#fff}.btn-danger:hover{background:#b52c2c}.btn-sm{padding:.45rem .85rem;font-size:.8rem}
+    .loading-overlay{position:fixed;inset:0;background:rgba(247,248,250,.92);backdrop-filter:blur(6px);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.25rem}.loader{width:42px;height:42px;border:3px solid #d8dce5;border-top-color:#1e3a66;border-radius:50%;animation:spin .7s linear infinite}.loader-text{color:#8892a4;font-size:.88rem}@keyframes spin{to{transform:rotate(360deg)}}
+    .toast-container{position:fixed;top:1.25rem;right:1.25rem;z-index:9999;display:flex;flex-direction:column;gap:.5rem}.toast{background:#fff;border-radius:8px;box-shadow:0 12px 36px rgba(15,29,54,.14);padding:.9rem 1.1rem;display:flex;align-items:center;gap:.65rem;min-width:280px;animation:slideIn .3s ease-out;border-left:4px solid #0d9f4f;font-size:.88rem}.toast.error{border-left-color:#d43535}@keyframes slideIn{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
+    .text-muted{color:#8892a4}.text-sm{font-size:.82rem}.d-flex{display:flex}.gap-1{gap:.5rem}.mb-2{margin-bottom:1rem}
+    @media(max-width:1024px){.detail-grid{grid-template-columns:1fr}}
+    @media(max-width:768px){.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.main-content{margin-left:0}.mobile-menu-btn{display:block}.page-content{padding:1.25rem 1rem}}
+  </style>
+</head>
+<body>
+  <div id="loading-overlay" class="loading-overlay"><div class="loader"></div><span class="loader-text">Cargando documento...</span></div>
+  <div class="app-layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <main class="main-content">
+      <header class="top-header"><button class="mobile-menu-btn" id="mobile-menu-btn">☰</button><div><h1 class="page-title">Detalle del Documento</h1><p class="page-breadcrumb">Panel → Detalle</p></div><div><button class="btn btn-outline btn-sm" onclick="history.back()">← Volver</button></div></header>
+      <div class="page-content">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem">
+          <div><h1 id="doc-titulo" style="font-size:1.5rem">Cargando...</h1><div style="display:flex;align-items:center;gap:.85rem;color:#8892a4;font-size:.82rem;margin-top:.4rem"><span id="doc-estado"></span><span id="doc-fecha"></span><span id="doc-pri"></span></div></div>
+          <div class="d-flex gap-1" id="actions"></div>
+        </div>
+        <div class="detail-grid">
+          <div>
+            <div class="card mb-2">
+              <div class="card-header"><h3>📋 Información</h3></div>
+              <div class="card-body" id="doc-info"></div>
+            </div>
+            <div class="card"><div class="card-header"><h3>📎 Archivos</h3></div><div class="card-body" id="archivos"><p class="text-muted text-sm">Sin archivos</p></div></div>
+          </div>
+          <div><div class="card"><div class="card-header"><h3>🕐 Historial</h3></div><div class="card-body"><div class="timeline" id="timeline"></div></div></div></div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <div class="toast-container" id="toast-container"></div>
+  <script>setTimeout(function(){var o=document.getElementById('loading-overlay');if(o)o.style.display='none';},8000);</script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    const app=initializeApp({apiKey:"AIzaSyDx51kbwTjdRL_XjbFZ352aqWGhub-eGxg",authDomain:"gestion-cap.firebaseapp.com",projectId:"gestion-cap",storageBucket:"gestion-cap.firebasestorage.app",messagingSenderId:"634447801",appId:"1:634447801:web:229622aa91cc10e9d17868"});
+    const auth=getAuth(app),db=getFirestore(app);
+    const ROLES={admin:'Administrador',secretario:'Secretario/a',inspector:'Inspector/a',regional:'Autoridad Regional',director:'Director/a'};
+    const TIPOS={solicitud_licencia:'Sol. Licencia',certificado_cap:'Cert. CAP',nota_elevacion:'Nota Elevación',informe:'Informe',resolucion:'Resolución',acta:'Acta',memorandum:'Memorándum',circular:'Circular',disposicion:'Disposición',otro:'Otro'};
+    function cap(s){return s?s.charAt(0).toUpperCase()+s.slice(1).replace(/-/g,' '):''}
+    function hideLoading(){const o=document.getElementById('loading-overlay');if(o){o.style.opacity='0';setTimeout(()=>o.style.display='none',300);}}
+    function toast(m,t){const c=document.getElementById('toast-container');const el=document.createElement('div');el.className='toast '+(t||'');el.innerHTML=`<span style="flex:1">${m}</span>`;c.appendChild(el);setTimeout(()=>{if(el.parentElement)el.remove();},4000);}
+
+    function renderSidebar(u){const n=u.nombre||u.email;const i=n.split(' ').map(x=>x[0]).join('').substring(0,2).toUpperCase();document.getElementById('sidebar').innerHTML=`<div class="sidebar-header"><div class="brand"><div class="brand-icon">G</div><div><div class="brand-text">Gestión CAP</div><div class="brand-zone">Zona ${u.zona||'1131'}</div></div></div></div><nav class="sidebar-nav"><div class="nav-section-title">Principal</div><a href="panel.html" class="nav-item"><span class="nav-icon">📊</span>Panel</a><a href="nueva-carga.html" class="nav-item"><span class="nav-icon">📝</span>Nueva Carga</a><div class="nav-section-title">Documentos</div><a href="enviados.html" class="nav-item"><span class="nav-icon">📤</span>Enviados</a><a href="recibidos.html" class="nav-item"><span class="nav-icon">📥</span>Recibidos</a></nav><div class="sidebar-footer"><div class="sidebar-user"><div class="avatar">${i}</div><div class="user-info"><div class="user-name">${n}</div><div class="user-role">${ROLES[u.rol]||u.rol}</div></div><button class="btn-logout-s" id="btn-logout">🚪</button></div></div>`;document.getElementById('btn-logout').addEventListener('click',async()=>{await signOut(auth);window.location.href='index.html';});document.getElementById('mobile-menu-btn').addEventListener('click',()=>document.getElementById('sidebar').classList.toggle('open'));}
+
+    let currentUser,currentDoc,docId;
+    const params=new URLSearchParams(location.search);docId=params.get('id');
+    if(!docId){location.href='panel.html';}
+
+    onAuthStateChanged(auth,async(user)=>{
+      if(!user){window.location.href='index.html';return;}
+      try{const s=await getDoc(doc(db,'usuarios',user.uid));if(!s.exists()){await signOut(auth);window.location.href='index.html';return;}
+      currentUser={uid:user.uid,email:user.email,...s.data()};renderSidebar(currentUser);hideLoading();await loadDoc();}catch(e){console.error(e);hideLoading();}
+    });
+
+    async function loadDoc(){
+      const snap=await getDoc(doc(db,'documentos',docId));
+      if(!snap.exists()){toast('No encontrado','error');setTimeout(()=>location.href='panel.html',1500);return;}
+      currentDoc=snap.data();render();
+    }
+
+    function render(){
+      const d=currentDoc;
+      const fecha=d.fechaCreacion?.toDate?d.fechaCreacion.toDate().toLocaleDateString('es-AR',{day:'2-digit',month:'long',year:'numeric'}):'-';
+      document.getElementById('doc-titulo').textContent=d.titulo||'Sin título';
+      document.getElementById('doc-estado').innerHTML=`<span class="badge-st ${d.estado||'pendiente'}">${cap(d.estado||'pendiente')}</span>`;
+      document.getElementById('doc-fecha').textContent='📅 '+fecha;
+      document.getElementById('doc-pri').textContent=d.prioridad==='urgente'?'🔴 Urgente':d.prioridad==='baja'?'⚪ Baja':'🟡 Normal';
+
+      document.getElementById('doc-info').innerHTML=[
+        ['Título',d.titulo||'-'],['Tipo',TIPOS[d.tipoDocumento]||d.tipoDocumento||'-'],['Prioridad',cap(d.prioridad||'normal')],
+        ['Remitente',d.creadoPorNombre||d.creadoPorEmail||'-'],['Zona Origen','Zona '+(d.zonaOrigen||'-')],
+        ['Destinatario',d.destinatario||'No especificado'],['Zona Destino','Zona '+(d.destinatarioZona||'-')],
+        ['Descripción',d.descripcion||'Sin descripción']
+      ].map(([l,v])=>`<div class="info-row"><span class="info-label">${l}</span><span class="info-value">${v}</span></div>`).join('');
+
+      const al=document.getElementById('archivos');
+      if(d.archivos?.length){al.innerHTML=d.archivos.map(a=>{const ic=a.tipo?.includes('pdf')?'📄':a.tipo?.includes('image')?'🖼️':'📃';return `<div class="file-item"><span>${ic}</span><span class="file-name">${a.nombre}</span><span class="text-sm text-muted">${(a.tamano/1024).toFixed(1)}KB</span><a href="${a.url}" target="_blank" class="btn btn-outline btn-sm">Descargar</a></div>`;}).join('');}
+
+      const tl=document.getElementById('timeline');
+      if(d.historial?.length){tl.innerHTML=d.historial.slice().reverse().map(h=>{const dt=h.fecha?new Date(h.fecha).toLocaleDateString('es-AR',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}):'-';return `<div class="tl-item"><div class="tl-date">${dt}</div><div class="tl-text"><strong>${h.accion}</strong><br><span class="text-sm text-muted">${h.usuario||''}${h.detalle?' — '+h.detalle:''}</span></div></div>`;}).join('');}else{tl.innerHTML='<p class="text-muted text-sm">Sin historial</p>';}
+
+      const canR=['inspector','admin','regional'].includes(currentUser.rol)&&d.creadoPor!==currentUser.uid;
+      const ab=document.getElementById('actions');
+      if(canR){ab.innerHTML=`<button class="btn btn-success btn-sm" id="b-ok">✅ Aprobar</button><button class="btn btn-danger btn-sm" id="b-no">❌ Rechazar</button>`;
+        document.getElementById('b-ok').addEventListener('click',()=>cambiar('aprobado'));
+        document.getElementById('b-no').addEventListener('click',()=>cambiar('rechazado'));}
+    }
+
+    async function cambiar(estado){
+      if(!confirm('¿Cambiar a "'+cap(estado)+'"?'))return;
+      try{const r=doc(db,'documentos',docId);const hist=currentDoc.historial||[];
+        hist.push({accion:'Estado: '+cap(estado),usuario:currentUser.nombre||currentUser.email,fecha:new Date().toISOString()});
+        await updateDoc(r,{estado,historial:hist});toast('Documento '+cap(estado));await loadDoc();
+      }catch(e){console.error(e);toast('Error','error');}
+    }
+  </script>
+</body>
+</html>

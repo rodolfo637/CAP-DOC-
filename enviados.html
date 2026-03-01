@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestión CAP — Enviados</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230f1d36'/><text x='50%25' y='55%25' text-anchor='middle' dominant-baseline='middle' font-size='16' fill='%23c8a951' font-weight='bold'>G</text></svg>">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap');
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}body{font-family:'DM Sans',sans-serif;color:#1e2738;background:#f7f8fa;min-height:100vh;-webkit-font-smoothing:antialiased;line-height:1.6}a{color:#274a82;text-decoration:none;transition:all .3s ease}a:hover{color:#c8a951}h1,h2,h3{font-family:'Playfair Display',serif;color:#0f1d36;line-height:1.2}
+    .app-layout{display:flex;min-height:100vh}.sidebar{width:255px;background:linear-gradient(180deg,#0f1d36,#080e1a);color:#fff;display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100;transition:all .3s ease;border-right:1px solid rgba(255,255,255,.05)}.sidebar-header{padding:1.35rem 1.2rem;border-bottom:1px solid rgba(255,255,255,.06)}.brand{display:flex;align-items:center;gap:.7rem}.brand-icon{width:36px;height:36px;background:linear-gradient(135deg,#c8a951,#8a6d1e);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;font-weight:800;color:#fff;font-family:'Playfair Display',serif}.brand-text{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700}.brand-zone{font-size:.68rem;color:#d9bf6e;text-transform:uppercase;letter-spacing:.1em}.sidebar-nav{flex:1;padding:.75rem .65rem;overflow-y:auto}.nav-section-title{font-size:.68rem;text-transform:uppercase;letter-spacing:.12em;color:rgba(255,255,255,.25);padding:.85rem .75rem .4rem;font-weight:600}.nav-item{display:flex;align-items:center;gap:.7rem;padding:.65rem .75rem;border-radius:8px;color:rgba(255,255,255,.55);font-size:.88rem;font-weight:500;transition:all .3s ease;margin-bottom:2px}.nav-item:hover{background:rgba(255,255,255,.05);color:rgba(255,255,255,.9)}.nav-item.active{background:rgba(200,169,81,.12);color:#d9bf6e;font-weight:600}.nav-icon{font-size:1.1rem;width:22px;text-align:center}.sidebar-footer{padding:1rem 1.2rem;border-top:1px solid rgba(255,255,255,.06)}.sidebar-user{display:flex;align-items:center;gap:.65rem}.avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#274a82,#3562a8);display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700;color:#fff}.user-info{flex:1;min-width:0}.user-name{font-size:.82rem;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.user-role{font-size:.7rem;color:rgba(255,255,255,.35)}.btn-logout-s{background:none;border:none;color:rgba(255,255,255,.3);cursor:pointer;font-size:1.05rem;padding:.3rem;border-radius:8px}.btn-logout-s:hover{color:#d43535}
+    .main-content{flex:1;margin-left:255px;min-height:100vh}.top-header{background:#fff;border-bottom:1px solid #eceef3;padding:.9rem 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;box-shadow:0 1px 2px rgba(15,29,54,.05)}.page-title{font-size:1.25rem;color:#0f1d36}.page-breadcrumb{font-size:.77rem;color:#8892a4}.mobile-menu-btn{display:none;background:none;border:none;font-size:1.4rem;color:#0f1d36;cursor:pointer}.page-content{padding:1.75rem 2rem}
+    .card{background:#fff;border-radius:12px;border:1px solid #eceef3;box-shadow:0 1px 2px rgba(15,29,54,.05)}.card-body{padding:1.4rem}
+    .table-wrap{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:.88rem}thead th{background:#f7f8fa;color:#64707f;font-weight:600;font-size:.76rem;text-transform:uppercase;letter-spacing:.06em;padding:.75rem 1rem;text-align:left;border-bottom:2px solid #d8dce5;white-space:nowrap}tbody td{padding:.78rem 1rem;border-bottom:1px solid #eceef3;color:#374050;vertical-align:middle}tbody tr{transition:all .3s ease}tbody tr:hover{background:rgba(53,98,168,.02)}tbody tr:last-child td{border-bottom:none}
+    .badge-st{display:inline-flex;align-items:center;gap:.3rem;padding:.25rem .7rem;border-radius:28px;font-size:.76rem;font-weight:600}.badge-st::before{content:'';width:6px;height:6px;border-radius:50%;background:currentColor}.badge-st.pendiente{background:#fff8e5;color:#b8860b}.badge-st.aprobado{background:#ecfdf3;color:#0d9f4f}.badge-st.rechazado{background:#fef1f1;color:#d43535}.badge-st.en-revision{background:#eef4ff;color:#2567d8}
+    .filters-bar{display:flex;align-items:center;gap:.85rem;flex-wrap:wrap;margin-bottom:1.35rem}.search-input{flex:1;min-width:200px;padding:.6rem .9rem;border:1.5px solid #d8dce5;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.88rem;background:#fff;outline:none}.search-input:focus{border-color:#3562a8;box-shadow:0 0 0 3px rgba(53,98,168,.1)}.filters-bar select{padding:.6rem .9rem;border:1.5px solid #d8dce5;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.82rem;background:#fff;color:#4a5568;cursor:pointer}
+    .empty-state{text-align:center;padding:2.5rem 2rem}.empty-icon{font-size:3rem;margin-bottom:.75rem;opacity:.4}.empty-state h3{font-family:'Playfair Display',serif;color:#64707f;font-size:1.05rem}.empty-state p{color:#8892a4;font-size:.85rem}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.7rem 1.4rem;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:600;cursor:pointer;border:none;transition:all .3s ease;text-decoration:none;white-space:nowrap}.btn-gold{background:linear-gradient(135deg,#c8a951,#a88528);color:#fff}.btn-gold:hover{transform:translateY(-1px)}.btn-outline{background:transparent;border:1.5px solid #d8dce5;color:#4a5568}.btn-outline:hover{border-color:#3562a8;color:#1e3a66}.btn-sm{padding:.45rem .85rem;font-size:.8rem}
+    .loading-overlay{position:fixed;inset:0;background:rgba(247,248,250,.92);backdrop-filter:blur(6px);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.25rem}.loader{width:42px;height:42px;border:3px solid #d8dce5;border-top-color:#1e3a66;border-radius:50%;animation:spin .7s linear infinite}.loader-text{color:#8892a4;font-size:.88rem}@keyframes spin{to{transform:rotate(360deg)}}
+    .text-muted{color:#8892a4}.text-sm{font-size:.82rem}
+    @media(max-width:768px){.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.main-content{margin-left:0}.mobile-menu-btn{display:block}.page-content{padding:1.25rem 1rem}.filters-bar{flex-direction:column;align-items:stretch}}
+  </style>
+</head>
+<body>
+  <div id="loading-overlay" class="loading-overlay"><div class="loader"></div><span class="loader-text">Cargando...</span></div>
+  <div class="app-layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <main class="main-content">
+      <header class="top-header"><button class="mobile-menu-btn" id="mobile-menu-btn">☰</button><div><h1 class="page-title">Documentos Enviados</h1><p class="page-breadcrumb">Panel → Enviados</p></div><div><a href="nueva-carga.html" class="btn btn-gold btn-sm">➕ Nueva Carga</a></div></header>
+      <div class="page-content">
+        <div class="filters-bar">
+          <input type="text" class="search-input" id="search" placeholder="🔍 Buscar por título...">
+          <select id="f-estado"><option value="">Todos los estados</option><option value="pendiente">Pendiente</option><option value="en-revision">En Revisión</option><option value="aprobado">Aprobado</option><option value="rechazado">Rechazado</option></select>
+        </div>
+        <div class="card"><div class="card-body" style="padding:0"><div class="table-wrap"><table>
+          <thead><tr><th>Título</th><th>Tipo</th><th>Destino</th><th>Estado</th><th>Fecha</th><th>Acción</th></tr></thead>
+          <tbody id="tbody"><tr><td colspan="6"><div class="empty-state"><div class="empty-icon">📤</div><h3>No hay documentos enviados</h3><p>Los documentos que envíe aparecerán aquí</p></div></td></tr></tbody>
+        </table></div></div></div>
+      </div>
+    </main>
+  </div>
+  <script>setTimeout(function(){var o=document.getElementById('loading-overlay');if(o)o.style.display='none';},8000);</script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { getFirestore, doc, getDoc, collection, query, where, orderBy, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    const app=initializeApp({apiKey:"AIzaSyDx51kbwTjdRL_XjbFZ352aqWGhub-eGxg",authDomain:"gestion-cap.firebaseapp.com",projectId:"gestion-cap",storageBucket:"gestion-cap.firebasestorage.app",messagingSenderId:"634447801",appId:"1:634447801:web:229622aa91cc10e9d17868"});
+    const auth=getAuth(app),db=getFirestore(app);
+    const ROLES={admin:'Administrador',secretario:'Secretario/a',inspector:'Inspector/a',regional:'Autoridad Regional',director:'Director/a'};
+    const TIPOS={solicitud_licencia:'Sol. Licencia',certificado_cap:'Cert. CAP',nota_elevacion:'Nota Elevación',informe:'Informe',resolucion:'Resolución',acta:'Acta',memorandum:'Memorándum',circular:'Circular',disposicion:'Disposición',otro:'Otro'};
+    function cap(s){return s?s.charAt(0).toUpperCase()+s.slice(1).replace(/-/g,' '):''}
+    function fmtF(t){if(!t)return'-';const d=t.toDate?t.toDate():new Date(t);return d.toLocaleDateString('es-AR',{day:'2-digit',month:'2-digit',year:'numeric'});}
+    function hideLoading(){const o=document.getElementById('loading-overlay');if(o){o.style.opacity='0';o.style.transition='opacity .3s';setTimeout(()=>o.style.display='none',300);}}
+
+    function renderSidebar(u){const n=u.nombre||u.email;const i=n.split(' ').map(x=>x[0]).join('').substring(0,2).toUpperCase();document.getElementById('sidebar').innerHTML=`<div class="sidebar-header"><div class="brand"><div class="brand-icon">G</div><div><div class="brand-text">Gestión CAP</div><div class="brand-zone">Zona ${u.zona||'1131'}</div></div></div></div><nav class="sidebar-nav"><div class="nav-section-title">Principal</div><a href="panel.html" class="nav-item"><span class="nav-icon">📊</span>Panel</a><a href="nueva-carga.html" class="nav-item"><span class="nav-icon">📝</span>Nueva Carga</a><div class="nav-section-title">Documentos</div><a href="enviados.html" class="nav-item active"><span class="nav-icon">📤</span>Enviados</a><a href="recibidos.html" class="nav-item"><span class="nav-icon">📥</span>Recibidos</a></nav><div class="sidebar-footer"><div class="sidebar-user"><div class="avatar">${i}</div><div class="user-info"><div class="user-name">${n}</div><div class="user-role">${ROLES[u.rol]||u.rol}</div></div><button class="btn-logout-s" id="btn-logout">🚪</button></div></div>`;document.getElementById('btn-logout').addEventListener('click',async()=>{await signOut(auth);window.location.href='index.html';});document.getElementById('mobile-menu-btn').addEventListener('click',()=>document.getElementById('sidebar').classList.toggle('open'));}
+
+    let allDocs=[];
+    onAuthStateChanged(auth,async(user)=>{
+      if(!user){window.location.href='index.html';return;}
+      try{
+        const s=await getDoc(doc(db,'usuarios',user.uid));if(!s.exists()){await signOut(auth);window.location.href='index.html';return;}
+        const u={uid:user.uid,email:user.email,...s.data()};renderSidebar(u);hideLoading();
+        const q=query(collection(db,'documentos'),where('creadoPor','==',user.uid),orderBy('fechaCreacion','desc'));
+        const snap=await getDocs(q);allDocs=[];snap.forEach(d=>allDocs.push({id:d.id,...d.data()}));render();
+      }catch(e){console.error(e);hideLoading();}
+    });
+
+    document.getElementById('search').addEventListener('input',render);
+    document.getElementById('f-estado').addEventListener('change',render);
+
+    function render(){
+      const s=document.getElementById('search').value.toLowerCase();
+      const est=document.getElementById('f-estado').value;
+      const f=allDocs.filter(d=>(!s||(d.titulo||'').toLowerCase().includes(s))&&(!est||d.estado===est));
+      const tb=document.getElementById('tbody');
+      if(!f.length){tb.innerHTML='<tr><td colspan="6"><div class="empty-state"><div class="empty-icon">🔍</div><h3>Sin resultados</h3><p>Intente con otros filtros</p></div></td></tr>';return;}
+      tb.innerHTML=f.map(d=>`<tr><td><strong>${d.titulo||'Sin título'}</strong>${d.archivos?.length?' <span class="text-muted text-sm">📎'+d.archivos.length+'</span>':''}</td><td class="text-sm">${TIPOS[d.tipoDocumento]||d.tipoDocumento||'-'}</td><td>Zona ${d.destinatarioZona||'-'}</td><td><span class="badge-st ${d.estado||'pendiente'}">${cap(d.estado||'pendiente')}</span></td><td class="text-muted text-sm">${fmtF(d.fechaCreacion)}</td><td><a href="detalle.html?id=${d.id}" class="btn btn-outline btn-sm">Ver</a></td></tr>`).join('');
+    }
+  </script>
+</body>
+</html>
