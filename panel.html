@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestión CAP — Panel</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230f1d36'/><text x='50%25' y='55%25' text-anchor='middle' dominant-baseline='middle' font-size='16' fill='%23c8a951' font-weight='bold'>G</text></svg>">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap');
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'DM Sans',sans-serif;color:#1e2738;background:#f7f8fa;min-height:100vh;-webkit-font-smoothing:antialiased;line-height:1.6}
+    a{color:#274a82;text-decoration:none;transition:all .3s ease}a:hover{color:#c8a951}
+    h1,h2,h3{font-family:'Playfair Display',serif;color:#0f1d36;line-height:1.2}
+    .app-layout{display:flex;min-height:100vh}
+    .sidebar{width:255px;background:linear-gradient(180deg,#0f1d36,#080e1a);color:#fff;display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100;transition:all .3s ease;border-right:1px solid rgba(255,255,255,.05)}
+    .sidebar-header{padding:1.35rem 1.2rem;border-bottom:1px solid rgba(255,255,255,.06)}
+    .brand{display:flex;align-items:center;gap:.7rem}
+    .brand-icon{width:36px;height:36px;background:linear-gradient(135deg,#c8a951,#8a6d1e);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;font-weight:800;color:#fff;font-family:'Playfair Display',serif}
+    .brand-text{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700}
+    .brand-zone{font-size:.68rem;color:#d9bf6e;text-transform:uppercase;letter-spacing:.1em;font-weight:500}
+    .sidebar-nav{flex:1;padding:.75rem .65rem;overflow-y:auto}
+    .nav-section-title{font-size:.68rem;text-transform:uppercase;letter-spacing:.12em;color:rgba(255,255,255,.25);padding:.85rem .75rem .4rem;font-weight:600}
+    .nav-item{display:flex;align-items:center;gap:.7rem;padding:.65rem .75rem;border-radius:8px;color:rgba(255,255,255,.55);font-size:.88rem;font-weight:500;transition:all .3s ease;margin-bottom:2px}
+    .nav-item:hover{background:rgba(255,255,255,.05);color:rgba(255,255,255,.9)}
+    .nav-item.active{background:rgba(200,169,81,.12);color:#d9bf6e;font-weight:600}
+    .nav-icon{font-size:1.1rem;width:22px;text-align:center;flex-shrink:0}
+    .nav-item .badge{margin-left:auto;background:#d43535;color:#fff;font-size:.68rem;padding:.1rem .5rem;border-radius:10px;font-weight:700;min-width:20px;text-align:center}
+    .sidebar-footer{padding:1rem 1.2rem;border-top:1px solid rgba(255,255,255,.06)}
+    .sidebar-user{display:flex;align-items:center;gap:.65rem}
+    .avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#274a82,#3562a8);display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700;color:#fff;flex-shrink:0}
+    .user-info{flex:1;min-width:0}
+    .user-name{font-size:.82rem;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .user-role{font-size:.7rem;color:rgba(255,255,255,.35)}
+    .btn-logout-s{background:none;border:none;color:rgba(255,255,255,.3);cursor:pointer;font-size:1.05rem;padding:.3rem;border-radius:8px;transition:all .3s ease}
+    .btn-logout-s:hover{color:#d43535;background:rgba(212,53,53,.1)}
+    .main-content{flex:1;margin-left:255px;min-height:100vh;background:#f7f8fa}
+    .top-header{background:#fff;border-bottom:1px solid #eceef3;padding:.9rem 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;box-shadow:0 1px 2px rgba(15,29,54,.05)}
+    .page-title{font-size:1.25rem;color:#0f1d36;margin-bottom:.05rem}
+    .page-breadcrumb{font-size:.77rem;color:#8892a4}
+    .header-actions{display:flex;align-items:center;gap:.65rem}
+    .mobile-menu-btn{display:none;background:none;border:none;font-size:1.4rem;color:#0f1d36;cursor:pointer}
+    .page-content{padding:1.75rem 2rem}
+    .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1.15rem;margin-bottom:1.75rem}
+    .stat-card{background:#fff;border-radius:12px;padding:1.2rem 1.35rem;border:1px solid #eceef3;box-shadow:0 1px 2px rgba(15,29,54,.05);display:flex;align-items:center;gap:1rem;transition:all .3s ease}
+    .stat-card:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(15,29,54,.1)}
+    .stat-icon{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0}
+    .stat-icon.blue{background:#eef4ff}.stat-icon.green{background:#ecfdf3}.stat-icon.gold{background:#fff8e5}.stat-icon.red{background:#fef1f1}
+    .stat-value{font-size:1.65rem;font-weight:700;color:#0f1d36;line-height:1;margin-bottom:.15rem;font-family:'Playfair Display',serif}
+    .stat-label{font-size:.78rem;color:#8892a4;font-weight:500}
+    .card{background:#fff;border-radius:12px;border:1px solid #eceef3;box-shadow:0 1px 2px rgba(15,29,54,.05);transition:all .3s ease}
+    .card:hover{box-shadow:0 2px 6px rgba(15,29,54,.07)}
+    .card-header{padding:1.1rem 1.4rem;border-bottom:1px solid #eceef3;display:flex;align-items:center;justify-content:space-between}
+    .card-header h3{font-size:1.05rem}
+    .card-body{padding:1.4rem}
+    .table-wrap{overflow-x:auto}
+    table{width:100%;border-collapse:collapse;font-size:.88rem}
+    thead th{background:#f7f8fa;color:#64707f;font-weight:600;font-size:.76rem;text-transform:uppercase;letter-spacing:.06em;padding:.75rem 1rem;text-align:left;border-bottom:2px solid #d8dce5;white-space:nowrap}
+    tbody td{padding:.78rem 1rem;border-bottom:1px solid #eceef3;color:#374050;vertical-align:middle}
+    tbody tr{transition:all .3s ease}tbody tr:hover{background:rgba(53,98,168,.02)}
+    tbody tr:last-child td{border-bottom:none}
+    .badge-st{display:inline-flex;align-items:center;gap:.3rem;padding:.25rem .7rem;border-radius:28px;font-size:.76rem;font-weight:600}
+    .badge-st::before{content:'';width:6px;height:6px;border-radius:50%;background:currentColor}
+    .badge-st.pendiente{background:#fff8e5;color:#b8860b}
+    .badge-st.aprobado{background:#ecfdf3;color:#0d9f4f}
+    .badge-st.rechazado{background:#fef1f1;color:#d43535}
+    .badge-st.en-revision{background:#eef4ff;color:#2567d8}
+    .empty-state{text-align:center;padding:2.5rem 2rem}
+    .empty-state .empty-icon{font-size:3rem;margin-bottom:.75rem;opacity:.4}
+    .empty-state h3{font-family:'Playfair Display',serif;color:#64707f;margin-bottom:.35rem;font-size:1.05rem}
+    .empty-state p{color:#8892a4;font-size:.85rem}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.7rem 1.4rem;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:600;cursor:pointer;border:none;transition:all .3s ease;text-decoration:none;white-space:nowrap}
+    .btn:disabled{opacity:.55;cursor:not-allowed}
+    .btn-gold{background:linear-gradient(135deg,#c8a951,#a88528);color:#fff}
+    .btn-gold:hover:not(:disabled){background:linear-gradient(135deg,#d9bf6e,#c8a951);transform:translateY(-1px)}
+    .btn-outline{background:transparent;border:1.5px solid #d8dce5;color:#4a5568}
+    .btn-outline:hover:not(:disabled){border-color:#3562a8;color:#1e3a66;background:rgba(53,98,168,.03)}
+    .btn-sm{padding:.45rem .85rem;font-size:.8rem}
+    .quick-action-card{display:flex;align-items:center;gap:1rem;padding:1.15rem 1.25rem;background:#fff;border:1px solid #eceef3;border-radius:12px;transition:all .3s ease;text-decoration:none;color:#374050}
+    .quick-action-card:hover{border-color:#d9bf6e;box-shadow:0 2px 6px rgba(15,29,54,.07);transform:translateY(-2px);color:#0f1d36}
+    .quick-action-card .qa-icon{font-size:1.6rem;width:44px;height:44px;border-radius:8px;display:flex;align-items:center;justify-content:center;background:#f7f8fa;flex-shrink:0}
+    .quick-action-card strong{font-size:.9rem;display:block;margin-bottom:.1rem}
+    .quick-action-card small{color:#8892a4;font-size:.78rem}
+    .loading-overlay{position:fixed;inset:0;background:rgba(247,248,250,.92);backdrop-filter:blur(6px);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.25rem}
+    .loader{width:42px;height:42px;border:3px solid #d8dce5;border-top-color:#1e3a66;border-radius:50%;animation:spin .7s linear infinite}
+    .loader-text{color:#8892a4;font-size:.88rem}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .toast-container{position:fixed;top:1.25rem;right:1.25rem;z-index:9999;display:flex;flex-direction:column;gap:.5rem}
+    .toast{background:#fff;border-radius:8px;box-shadow:0 12px 36px rgba(15,29,54,.14);padding:.9rem 1.1rem;display:flex;align-items:center;gap:.65rem;min-width:280px;max-width:400px;animation:slideIn .3s ease-out;border-left:4px solid #162a4a;font-size:.88rem}
+    .toast.success{border-left-color:#0d9f4f}.toast.error{border-left-color:#d43535}
+    @keyframes slideIn{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
+    .hidden{display:none !important}
+    .text-muted{color:#8892a4}.text-sm{font-size:.82rem}
+    @media(max-width:768px){.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0);box-shadow:0 24px 64px rgba(15,29,54,.2)}.main-content{margin-left:0}.mobile-menu-btn{display:block}.top-header{padding:.85rem 1rem}.page-content{padding:1.25rem 1rem}.stats-grid{grid-template-columns:1fr 1fr}}
+    @media(max-width:480px){.stats-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <div id="loading-overlay" class="loading-overlay">
+    <div class="loader"></div>
+    <span class="loader-text">Cargando panel...</span>
+  </div>
+
+  <div class="app-layout">
+    <aside class="sidebar" id="sidebar"></aside>
+
+    <main class="main-content">
+      <header class="top-header">
+        <div><button class="mobile-menu-btn" id="mobile-menu-btn">☰</button></div>
+        <div class="page-info">
+          <h1 class="page-title">Panel de Control</h1>
+          <p class="page-breadcrumb">Resumen general de gestión documental</p>
+        </div>
+        <div class="header-actions">
+          <a href="nueva-carga.html" class="btn btn-gold btn-sm">➕ Nueva Carga</a>
+        </div>
+      </header>
+
+      <div class="page-content">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon blue">📄</div>
+            <div><div class="stat-value" id="stat-total">0</div><div class="stat-label">Total Documentos</div></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon gold">⏳</div>
+            <div><div class="stat-value" id="stat-pendientes">0</div><div class="stat-label">Pendientes</div></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon green">✅</div>
+            <div><div class="stat-value" id="stat-aprobados">0</div><div class="stat-label">Aprobados</div></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon red">❌</div>
+            <div><div class="stat-value" id="stat-rechazados">0</div><div class="stat-label">Rechazados</div></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3>📋 Documentos Recientes</h3>
+            <a href="enviados.html" class="btn btn-outline btn-sm">Ver todos →</a>
+          </div>
+          <div class="card-body" style="padding:0">
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr><th>Documento</th><th>Tipo</th><th>Destino</th><th>Estado</th><th>Fecha</th><th>Acción</th></tr>
+                </thead>
+                <tbody id="tabla-recientes">
+                  <tr><td colspan="6"><div class="empty-state"><div class="empty-icon">📂</div><h3>Sin documentos recientes</h3><p>Los documentos que cargue aparecerán aquí</p></div></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:1.35rem">
+          <div class="card">
+            <div class="card-header"><h3>⚡ Accesos Rápidos</h3></div>
+            <div class="card-body">
+              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem">
+                <a href="nueva-carga.html" class="quick-action-card"><div class="qa-icon">📝</div><div><strong>Nueva Carga</strong><small>Cargar documentación</small></div></a>
+                <a href="enviados.html" class="quick-action-card"><div class="qa-icon">📤</div><div><strong>Enviados</strong><small>Ver documentos enviados</small></div></a>
+                <a href="recibidos.html" class="quick-action-card"><div class="qa-icon">📥</div><div><strong>Recibidos</strong><small>Bandeja de entrada</small></div></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div class="toast-container" id="toast-container"></div>
+
+  <script type="module">
+    import { db, collection, query, where, orderBy, limit, getDocs } from './js/firebase-config.js';
+    import { initApp, showToast, formatTipo, capitalizar, formatFecha, animateValue } from './js/app-shell.js';
+
+    try {
+      const user = await initApp('panel');
+      loadStats(user);
+      loadRecent(user);
+    } catch (e) { console.error(e); }
+
+    async function loadStats(user) {
+      try {
+        const envQ = query(collection(db, 'documentos'), where('creadoPor', '==', user.uid));
+        const snap = await getDocs(envQ);
+        let total = 0, pend = 0, apro = 0, rech = 0;
+        snap.forEach(d => { const s = d.data().estado; total++; if(s==='pendiente') pend++; else if(s==='aprobado') apro++; else if(s==='rechazado') rech++; });
+
+        if (['inspector','admin','regional'].includes(user.rol)) {
+          const rQ = query(collection(db, 'documentos'), where('destinatarioZona', '==', user.zona || '1131'));
+          const rSnap = await getDocs(rQ);
+          rSnap.forEach(d => { const data = d.data(); if(data.creadoPor !== user.uid){ total++; const s = data.estado; if(s==='pendiente') pend++; else if(s==='aprobado') apro++; else if(s==='rechazado') rech++; }});
+        }
+        animateValue('stat-total', total);
+        animateValue('stat-pendientes', pend);
+        animateValue('stat-aprobados', apro);
+        animateValue('stat-rechazados', rech);
+      } catch(e){ console.error(e); }
+    }
+
+    async function loadRecent(user) {
+      try {
+        const q = query(collection(db, 'documentos'), where('creadoPor', '==', user.uid), orderBy('fechaCreacion', 'desc'), limit(5));
+        const snap = await getDocs(q);
+        if (snap.empty) return;
+        const tbody = document.getElementById('tabla-recientes');
+        tbody.innerHTML = '';
+        snap.forEach(d => {
+          const data = d.data();
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td><strong>${data.titulo||'Sin título'}</strong></td>
+            <td class="text-sm">${formatTipo(data.tipoDocumento)}</td>
+            <td>Zona ${data.destinatarioZona||'-'}</td>
+            <td><span class="badge-st ${data.estado||'pendiente'}">${capitalizar(data.estado||'pendiente')}</span></td>
+            <td class="text-muted text-sm">${formatFecha(data.fechaCreacion)}</td>
+            <td><a href="detalle.html?id=${d.id}" class="btn btn-outline btn-sm">Ver</a></td>`;
+          tbody.appendChild(tr);
+        });
+      } catch(e){ console.error(e); }
+    }
+  </script>
+</body>
+</html>

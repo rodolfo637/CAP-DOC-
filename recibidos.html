@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestión CAP — Recibidos</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230f1d36'/><text x='50%25' y='55%25' text-anchor='middle' dominant-baseline='middle' font-size='16' fill='%23c8a951' font-weight='bold'>G</text></svg>">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap');
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}body{font-family:'DM Sans',sans-serif;color:#1e2738;background:#f7f8fa;min-height:100vh;-webkit-font-smoothing:antialiased;line-height:1.6}a{color:#274a82;text-decoration:none;transition:all .3s ease}a:hover{color:#c8a951}h1,h2,h3{font-family:'Playfair Display',serif;color:#0f1d36;line-height:1.2}.app-layout{display:flex;min-height:100vh}.sidebar{width:255px;background:linear-gradient(180deg,#0f1d36,#080e1a);color:#fff;display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100;transition:all .3s ease;border-right:1px solid rgba(255,255,255,.05)}.sidebar-header{padding:1.35rem 1.2rem;border-bottom:1px solid rgba(255,255,255,.06)}.brand{display:flex;align-items:center;gap:.7rem}.brand-icon{width:36px;height:36px;background:linear-gradient(135deg,#c8a951,#8a6d1e);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;font-weight:800;color:#fff;font-family:'Playfair Display',serif}.brand-text{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700}.brand-zone{font-size:.68rem;color:#d9bf6e;text-transform:uppercase;letter-spacing:.1em}.sidebar-nav{flex:1;padding:.75rem .65rem;overflow-y:auto}.nav-section-title{font-size:.68rem;text-transform:uppercase;letter-spacing:.12em;color:rgba(255,255,255,.25);padding:.85rem .75rem .4rem;font-weight:600}.nav-item{display:flex;align-items:center;gap:.7rem;padding:.65rem .75rem;border-radius:8px;color:rgba(255,255,255,.55);font-size:.88rem;font-weight:500;transition:all .3s ease;margin-bottom:2px}.nav-item:hover{background:rgba(255,255,255,.05);color:rgba(255,255,255,.9)}.nav-item.active{background:rgba(200,169,81,.12);color:#d9bf6e;font-weight:600}.nav-icon{font-size:1.1rem;width:22px;text-align:center}.sidebar-footer{padding:1rem 1.2rem;border-top:1px solid rgba(255,255,255,.06)}.sidebar-user{display:flex;align-items:center;gap:.65rem}.avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#274a82,#3562a8);display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700;color:#fff}.user-info{flex:1;min-width:0}.user-name{font-size:.82rem;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.user-role{font-size:.7rem;color:rgba(255,255,255,.35)}.btn-logout-s{background:none;border:none;color:rgba(255,255,255,.3);cursor:pointer;font-size:1.05rem;padding:.3rem;border-radius:8px}.btn-logout-s:hover{color:#d43535}.main-content{flex:1;margin-left:255px;min-height:100vh}.top-header{background:#fff;border-bottom:1px solid #eceef3;padding:.9rem 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;box-shadow:0 1px 2px rgba(15,29,54,.05)}.page-title{font-size:1.25rem;color:#0f1d36}.page-breadcrumb{font-size:.77rem;color:#8892a4}.mobile-menu-btn{display:none;background:none;border:none;font-size:1.4rem;color:#0f1d36;cursor:pointer}.page-content{padding:1.75rem 2rem}
+    .card{background:#fff;border-radius:12px;border:1px solid #eceef3;box-shadow:0 1px 2px rgba(15,29,54,.05)}.card-body{padding:1.4rem}.table-wrap{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:.88rem}thead th{background:#f7f8fa;color:#64707f;font-weight:600;font-size:.76rem;text-transform:uppercase;letter-spacing:.06em;padding:.75rem 1rem;text-align:left;border-bottom:2px solid #d8dce5;white-space:nowrap}tbody td{padding:.78rem 1rem;border-bottom:1px solid #eceef3;color:#374050;vertical-align:middle}tbody tr{transition:all .3s ease}tbody tr:hover{background:rgba(53,98,168,.02)}
+    .badge-st{display:inline-flex;align-items:center;gap:.3rem;padding:.25rem .7rem;border-radius:28px;font-size:.76rem;font-weight:600}.badge-st::before{content:'';width:6px;height:6px;border-radius:50%;background:currentColor}.badge-st.pendiente{background:#fff8e5;color:#b8860b}.badge-st.aprobado{background:#ecfdf3;color:#0d9f4f}.badge-st.rechazado{background:#fef1f1;color:#d43535}.badge-st.en-revision{background:#eef4ff;color:#2567d8}
+    .filters-bar{display:flex;align-items:center;gap:.85rem;flex-wrap:wrap;margin-bottom:1.35rem}.filters-bar .search-input{flex:1;min-width:200px;padding:.6rem .9rem .6rem 2.4rem;border:1.5px solid #d8dce5;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.88rem;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238892a4' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E") no-repeat .7rem center/16px}.filters-bar .search-input:focus{outline:none;border-color:#3562a8;box-shadow:0 0 0 3px rgba(53,98,168,.1)}.filters-bar select{padding:.6rem 2rem .6rem .9rem;border:1.5px solid #d8dce5;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.82rem;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238892a4' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right .5rem center/16px;color:#4a5568;appearance:none;cursor:pointer}
+    .empty-state{text-align:center;padding:2.5rem 2rem}.empty-state .empty-icon{font-size:3rem;margin-bottom:.75rem;opacity:.4}.empty-state h3{font-family:'Playfair Display',serif;color:#64707f;font-size:1.05rem}.empty-state p{color:#8892a4;font-size:.85rem}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.7rem 1.4rem;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:600;cursor:pointer;border:none;transition:all .3s ease;text-decoration:none;white-space:nowrap}.btn:disabled{opacity:.55;cursor:not-allowed}.btn-primary{background:#162a4a;color:#fff}.btn-primary:hover:not(:disabled){background:#1e3a66;transform:translateY(-1px)}.btn-outline{background:transparent;border:1.5px solid #d8dce5;color:#4a5568}.btn-outline:hover:not(:disabled){border-color:#3562a8;color:#1e3a66}.btn-sm{padding:.45rem .85rem;font-size:.8rem}
+    .modal-overlay{position:fixed;inset:0;background:rgba(8,14,26,.55);backdrop-filter:blur(6px);z-index:1000;display:none;align-items:center;justify-content:center;padding:2rem}.modal-overlay.active{display:flex}.modal{background:#fff;border-radius:18px;width:100%;max-width:520px;max-height:90vh;overflow-y:auto;box-shadow:0 24px 64px rgba(15,29,54,.2);animation:scaleUp .2s ease-out}.modal-header{padding:1.35rem 1.5rem;border-bottom:1px solid #eceef3;display:flex;align-items:center;justify-content:space-between}.modal-close{background:none;border:none;font-size:1.2rem;cursor:pointer;color:#b8bfcc;padding:.2rem;border-radius:8px}.modal-close:hover{background:#eceef3;color:#4a5568}.modal-body{padding:1.5rem}.modal-footer{padding:1rem 1.5rem;border-top:1px solid #eceef3;display:flex;justify-content:flex-end;gap:.65rem}@keyframes scaleUp{from{transform:scale(.95);opacity:0}to{transform:scale(1);opacity:1}}
+    .form-group{margin-bottom:1.15rem}.form-group label{display:block;font-size:.82rem;font-weight:600;color:#4a5568;margin-bottom:.35rem}.form-group select,.form-group textarea{width:100%;padding:.7rem .9rem;border:1.5px solid #d8dce5;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.9rem;color:#1e2738;background:#fff;outline:none;transition:all .3s ease}.form-group select:focus,.form-group textarea:focus{border-color:#3562a8;box-shadow:0 0 0 3px rgba(53,98,168,.1)}.form-group textarea{resize:vertical;min-height:80px}
+    .loading-overlay{position:fixed;inset:0;background:rgba(247,248,250,.92);backdrop-filter:blur(6px);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.25rem}.loader{width:42px;height:42px;border:3px solid #d8dce5;border-top-color:#1e3a66;border-radius:50%;animation:spin .7s linear infinite}.loader-text{color:#8892a4;font-size:.88rem}@keyframes spin{to{transform:rotate(360deg)}}.toast-container{position:fixed;top:1.25rem;right:1.25rem;z-index:9999;display:flex;flex-direction:column;gap:.5rem}.hidden{display:none !important}.text-muted{color:#8892a4}.text-sm{font-size:.82rem}.d-flex{display:flex}.gap-1{gap:.5rem}
+    @media(max-width:768px){.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.main-content{margin-left:0}.mobile-menu-btn{display:block}.page-content{padding:1.25rem 1rem}.filters-bar{flex-direction:column;align-items:stretch}}
+  </style>
+</head>
+<body>
+  <div id="loading-overlay" class="loading-overlay"><div class="loader"></div><span class="loader-text">Cargando...</span></div>
+  <div class="app-layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <main class="main-content">
+      <header class="top-header">
+        <div><button class="mobile-menu-btn" id="mobile-menu-btn">☰</button></div>
+        <div><h1 class="page-title">Documentos Recibidos</h1><p class="page-breadcrumb">Panel → Recibidos</p></div>
+        <div class="header-actions"></div>
+      </header>
+      <div class="page-content">
+        <div class="filters-bar">
+          <input type="text" class="search-input" id="search-input" placeholder="Buscar por título o remitente...">
+          <select id="filter-estado"><option value="">Todos los estados</option><option value="pendiente">Pendiente</option><option value="en-revision">En Revisión</option><option value="aprobado">Aprobado</option><option value="rechazado">Rechazado</option></select>
+          <select id="filter-zona"><option value="">Todas las zonas</option><option value="1101">Zona 1101</option><option value="1111">Zona 1111</option><option value="1121">Zona 1121</option><option value="1131">Zona 1131</option><option value="1141">Zona 1141</option><option value="1151">Zona 1151</option><option value="1161">Zona 1161</option><option value="1171">Zona 1171</option><option value="1181">Zona 1181</option><option value="1191">Zona 1191</option></select>
+        </div>
+        <div class="card"><div class="card-body" style="padding:0"><div class="table-wrap">
+          <table><thead><tr><th>Título</th><th>Remitente</th><th>Zona Origen</th><th>Tipo</th><th>Estado</th><th>Fecha</th><th>Acciones</th></tr></thead>
+          <tbody id="tabla-recibidos"><tr><td colspan="7"><div class="empty-state"><div class="empty-icon">📥</div><h3>No hay documentos recibidos</h3><p>Los documentos dirigidos a su zona aparecerán aquí</p></div></td></tr></tbody></table>
+        </div></div></div>
+      </div>
+    </main>
+  </div>
+
+  <div class="modal-overlay" id="modal-revision">
+    <div class="modal">
+      <div class="modal-header"><h3>📝 Revisar Documento</h3><button class="modal-close" id="modal-close-btn">✕</button></div>
+      <div class="modal-body">
+        <p style="margin-bottom:1rem"><strong id="modal-titulo"></strong></p>
+        <div class="form-group"><label>Cambiar Estado</label><select id="modal-estado"><option value="en-revision">En Revisión</option><option value="aprobado">Aprobado</option><option value="rechazado">Rechazado</option></select></div>
+        <div class="form-group"><label>Observación</label><textarea id="modal-obs" rows="3" placeholder="Observación (opcional)..."></textarea></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" id="modal-cancel-btn">Cancelar</button>
+        <button class="btn btn-primary" id="btn-guardar">Guardar Cambios</button>
+      </div>
+    </div>
+  </div>
+  <div class="toast-container" id="toast-container"></div>
+
+  <script type="module">
+    import { db, doc, getDoc, updateDoc, collection, query, where, orderBy, getDocs } from './js/firebase-config.js';
+    import { initApp, showToast, formatTipo, capitalizar, formatFecha } from './js/app-shell.js';
+
+    let currentUser, allDocs=[], selId=null;
+
+    try {
+      currentUser = await initApp('recibidos');
+      await loadDocs();
+    } catch(e){ console.error(e); }
+
+    async function loadDocs() {
+      const zona = currentUser.zona||'1131';
+      const q = currentUser.rol==='admin'
+        ? query(collection(db,'documentos'), orderBy('fechaCreacion','desc'))
+        : query(collection(db,'documentos'), where('destinatarioZona','==',zona), orderBy('fechaCreacion','desc'));
+      const snap = await getDocs(q);
+      allDocs=[];
+      snap.forEach(d => { const data=d.data(); if(data.creadoPor!==currentUser.uid) allDocs.push({id:d.id,...data}); });
+      filterRender();
+    }
+
+    ['search-input','filter-estado','filter-zona'].forEach(id => {
+      document.getElementById(id).addEventListener(id==='search-input'?'input':'change', filterRender);
+    });
+
+    function filterRender() {
+      const s=document.getElementById('search-input').value.toLowerCase();
+      const est=document.getElementById('filter-estado').value;
+      const z=document.getElementById('filter-zona').value;
+      const filtered=allDocs.filter(d => {
+        const ms=!s||(d.titulo||'').toLowerCase().includes(s)||(d.creadoPorNombre||'').toLowerCase().includes(s);
+        return ms && (!est||d.estado===est) && (!z||d.zonaOrigen===z);
+      });
+      const tbody=document.getElementById('tabla-recibidos');
+      const canR=['inspector','admin','regional'].includes(currentUser.rol);
+      if(!filtered.length){ tbody.innerHTML='<tr><td colspan="7"><div class="empty-state"><div class="empty-icon">🔍</div><h3>Sin resultados</h3><p>Intente otros filtros</p></div></td></tr>'; return; }
+      tbody.innerHTML=filtered.map(d => {
+        const acts=canR
+          ? `<a href="detalle.html?id=${d.id}" class="btn btn-outline btn-sm">Ver</a><button class="btn btn-primary btn-sm rev-btn" data-id="${d.id}" data-t="${(d.titulo||'').replace(/"/g,'&quot;')}" data-e="${d.estado}">Revisar</button>`
+          : `<a href="detalle.html?id=${d.id}" class="btn btn-outline btn-sm">Ver</a>`;
+        return `<tr>
+          <td><strong>${d.titulo||'Sin título'}</strong>${d.prioridad==='urgente'?' <span style="color:#d43535">🔴</span>':''}</td>
+          <td class="text-sm">${d.creadoPorNombre||d.creadoPorEmail||'-'}</td>
+          <td>Zona ${d.zonaOrigen||'-'}</td>
+          <td class="text-sm">${formatTipo(d.tipoDocumento)}</td>
+          <td><span class="badge-st ${d.estado||'pendiente'}">${capitalizar(d.estado||'pendiente')}</span></td>
+          <td class="text-muted text-sm">${formatFecha(d.fechaCreacion)}</td>
+          <td class="d-flex gap-1">${acts}</td></tr>`;
+      }).join('');
+
+      document.querySelectorAll('.rev-btn').forEach(b => b.addEventListener('click', () => {
+        selId=b.dataset.id;
+        document.getElementById('modal-titulo').textContent=b.dataset.t;
+        document.getElementById('modal-estado').value=b.dataset.e==='pendiente'?'en-revision':b.dataset.e;
+        document.getElementById('modal-obs').value='';
+        document.getElementById('modal-revision').classList.add('active');
+      }));
+    }
+
+    document.getElementById('modal-close-btn').addEventListener('click', closeModal);
+    document.getElementById('modal-cancel-btn').addEventListener('click', closeModal);
+    function closeModal() { document.getElementById('modal-revision').classList.remove('active'); selId=null; }
+
+    document.getElementById('btn-guardar').addEventListener('click', async () => {
+      if(!selId) return;
+      const ne=document.getElementById('modal-estado').value;
+      const obs=document.getElementById('modal-obs').value.trim();
+      const btn=document.getElementById('btn-guardar');
+      btn.disabled=true; btn.textContent='Guardando...';
+      try {
+        const ref=doc(db,'documentos',selId);
+        const snap=await getDoc(ref);
+        const hist=snap.data().historial||[];
+        hist.push({accion:`Estado: ${capitalizar(ne)}`,usuario:currentUser.nombre||currentUser.email,fecha:new Date().toISOString(),detalle:obs});
+        await updateDoc(ref,{estado:ne,historial:hist,ultimaActualizacion:new Date()});
+        showToast('Documento actualizado','success');
+        closeModal(); await loadDocs();
+      } catch(e){ console.error(e); showToast('Error al actualizar','error'); }
+      finally { btn.disabled=false; btn.textContent='Guardar Cambios'; }
+    });
+  </script>
+</body>
+</html>

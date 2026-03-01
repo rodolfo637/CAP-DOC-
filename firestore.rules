@@ -1,0 +1,29 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isAuth() { return request.auth != null; }
+    function userData() { return get(/databases/$(database)/documents/usuarios/$(request.auth.uid)).data; }
+    function isAdmin() { return isAuth() && userData().rol == 'admin'; }
+
+    match /usuarios/{userId} {
+      allow read: if isAuth() && (request.auth.uid == userId || isAdmin());
+      allow create, update, delete: if isAdmin();
+    }
+    match /documentos/{docId} {
+      allow read: if isAuth() && (
+        resource.data.creadoPor == request.auth.uid ||
+        resource.data.destinatarioZona == userData().zona ||
+        isAdmin()
+      );
+      allow create: if isAuth() && userData().activo != false;
+      allow update: if isAuth() && (
+        (resource.data.creadoPor == request.auth.uid && resource.data.estado == 'pendiente') ||
+        (userData().rol == 'inspector' && resource.data.destinatarioZona == userData().zona) ||
+        userData().rol == 'regional' || isAdmin()
+      );
+      allow delete: if isAuth() && (isAdmin() || (resource.data.creadoPor == request.auth.uid && resource.data.estado == 'pendiente'));
+    }
+    match /configuracion/{configId} { allow read: if isAuth(); allow write: if isAdmin(); }
+    match /zonas/{zonaId} { allow read: if isAuth(); allow write: if isAdmin(); }
+  }
+}
