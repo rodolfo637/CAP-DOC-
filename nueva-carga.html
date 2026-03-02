@@ -73,7 +73,15 @@
     import { getFirestore, doc, getDoc, addDoc, collection, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
     import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 
-    const app = initializeApp({apiKey:"AIzaSyDx51kbwTjdRL_XjbFZ352aqWGhub-eGxg",authDomain:"gestion-cap.firebaseapp.com",projectId:"gestion-cap",storageBucket:"gestion-cap.firebasestorage.app",messagingSenderId:"634447801",appId:"1:634447801:web:229622aa91cc10e9d17868"});
+    const app = initializeApp({
+      apiKey: "AIzaSyDx51kbwTjdRL_XjbFZ352aqWGhub-eGxg",
+      authDomain: "gestion-cap.firebaseapp.com",
+      databaseURL: "https://gestion-cap-default-rtdb.firebaseio.com",
+      projectId: "gestion-cap",
+      storageBucket: "gestion-cap.firebasestorage.app",
+      messagingSenderId: "634447801",
+      appId: "1:634447801:web:229622aa91cc10e9d17868"
+    });
     const auth=getAuth(app), db=getFirestore(app), storage=getStorage(app);
     const ROLES={admin:'Administrador',secretario:'Secretario/a',inspector:'Inspector/a',regional:'Autoridad Regional',director:'Director/a'};
     let currentUser;
@@ -112,9 +120,4 @@
         await addDoc(collection(db,'documentos'),{titulo:t,tipoDocumento:tipo,prioridad:pri,destinatarioZona:zd,destinatario:dest,descripcion:desc,archivos,estado:'pendiente',creadoPor:currentUser.uid,creadoPorNombre:currentUser.nombre||currentUser.email,creadoPorEmail:currentUser.email,zonaOrigen:currentUser.zona||'1131',fechaCreacion:serverTimestamp(),historial:[{accion:'Documento creado',usuario:currentUser.nombre||currentUser.email,fecha:new Date().toISOString(),detalle:'Enviado a Zona '+zd}]});
         document.getElementById('titulo').value='';document.getElementById('tipo-documento').value='';document.getElementById('destinatario-zona').value='';document.getElementById('destinatario').value='';document.getElementById('descripcion').value='';selectedFiles=[];renderFiles();
         document.getElementById('success-alert').classList.add('show');toast('Documento enviado exitosamente','success');window.scrollTo({top:0,behavior:'smooth'});
-      }catch(e){console.error(e);toast('Error: '+e.message,'error');}
-      finally{btn.classList.remove('loading');btn.disabled=false;}
-    });
-  </script>
-</body>
-</html>
+      }catch(e){con
