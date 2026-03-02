@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0f1d36">
+  <title>Gestión CAP — Iniciar Sesión</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230f1d36'/><text x='50%25' y='55%25' text-anchor='middle' dominant-baseline='middle' font-size='16' fill='%23c8a951' font-weight='bold'>G</text></svg>">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap');
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'DM Sans',sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+    .login-page{display:flex;min-height:100vh;background:#080e1a;position:relative;overflow:hidden}
+    .login-page::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 20% 50%,rgba(200,169,81,.07) 0%,transparent 60%),radial-gradient(ellipse 60% 80% at 80% 30%,rgba(30,58,102,.25) 0%,transparent 60%);pointer-events:none}
+    .login-page::after{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);background-size:60px 60px;pointer-events:none}
+    .login-container{display:flex;width:100%;max-width:1140px;margin:auto;padding:2rem;gap:5rem;align-items:center;position:relative;z-index:1}
+    .login-branding{flex:1;color:#fff;padding:1rem}
+    .logo-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(200,169,81,.12);border:1px solid rgba(200,169,81,.25);padding:.45rem 1rem;border-radius:28px;font-size:.78rem;color:#d9bf6e;letter-spacing:.08em;text-transform:uppercase;font-weight:600;margin-bottom:2rem}
+    .login-branding h1{font-family:'Playfair Display',serif;font-size:3.2rem;color:#fff;margin-bottom:.4rem;letter-spacing:-.02em;line-height:1.1}
+    .login-branding h1 span{color:#c8a951}
+    .subtitle{font-size:1.05rem;color:rgba(255,255,255,.5);font-weight:300;margin-bottom:3rem}
+    .login-features{display:flex;flex-direction:column;gap:1.5rem}
+    .login-feature-item{display:flex;align-items:flex-start;gap:1rem}
+    .icon-circle{flex-shrink:0;width:42px;height:42px;border-radius:10px;background:rgba(200,169,81,.1);border:1px solid rgba(200,169,81,.18);display:flex;align-items:center;justify-content:center;font-size:1.15rem}
+    .login-feature-item h4{color:#fff;font-size:.9rem;font-weight:600;margin-bottom:.1rem}
+    .login-feature-item p{color:rgba(255,255,255,.4);font-size:.82rem;font-weight:300}
+    .login-card{flex:0 0 400px;background:#fff;border-radius:18px;padding:2.5rem;box-shadow:0 24px 64px rgba(15,29,54,.2)}
+    .login-card h2{font-family:'Playfair Display',serif;font-size:1.4rem;margin-bottom:.25rem;color:#0f1d36}
+    .login-subtitle{color:#8892a4;font-size:.88rem;margin-bottom:2rem}
+    .form-group{margin-bottom:1.15rem}
+    .form-group label{display:block;font-size:.82rem;font-weight:600;color:#4a5568;margin-bottom:.35rem}
+    .form-group input{width:100%;padding:.7rem .9rem;border:1.5px solid #d8dce5;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.9rem;color:#1e2738;outline:none;transition:all .3s ease}
+    .form-group input:focus{border-color:#3562a8;box-shadow:0 0 0 3px rgba(53,98,168,.1)}
+    .form-group input::placeholder{color:#b8bfcc}
+    .input-icon-wrap{position:relative}
+    .input-icon-wrap .ic{position:absolute;left:.85rem;top:50%;transform:translateY(-50%);font-size:1rem;pointer-events:none;opacity:.45}
+    .input-icon-wrap input{padding-left:2.6rem}
+    .toggle-pw{position:absolute;right:.85rem;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:1rem;opacity:.4}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.7rem 1.4rem;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:600;cursor:pointer;border:none;transition:all .3s ease}
+    .btn:disabled{opacity:.55;cursor:not-allowed}
+    .btn-primary{background:#162a4a;color:#fff}
+    .btn-primary:hover:not(:disabled){background:#1e3a66;transform:translateY(-1px)}
+    .btn-block{width:100%}.btn-lg{padding:.85rem 1.75rem;font-size:.95rem}
+    .btn .spinner{display:none;width:18px;height:18px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite}
+    .btn.loading .spinner{display:inline-block}.btn.loading .btn-text{display:none}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .alert{padding:.85rem 1.1rem;border-radius:8px;font-size:.88rem;display:none;align-items:center;gap:.65rem;margin-bottom:1rem;border:1px solid}
+    .alert.show{display:flex}
+    .alert-danger{background:#fef1f1;color:#d43535;border-color:#fecaca}
+    .text-sm{font-size:.82rem}.text-muted{color:#8892a4}
+    a{color:#274a82;text-decoration:none}
+    @media(max-width:768px){.login-container{flex-direction:column;padding:1rem;gap:1.5rem}.login-branding{text-align:center}.login-branding h1{font-size:2.2rem}.login-features{display:none}.login-card{flex:unset;width:100%;max-width:400px}}
+    @media(max-width:480px){.login-card{padding:1.5rem}}
+  </style>
+</head>
+<body class="login-page">
+  <div class="login-container">
+    <div class="login-branding">
+      <div class="logo-badge">📋 Sistema Oficial</div>
+      <h1>Gestión <span>CAP</span></h1>
+      <p class="subtitle">Sistema de Gestión Documental — Zona 1131</p>
+      <div class="login-features">
+        <div class="login-feature-item"><div class="icon-circle">📄</div><div><h4>Gestión Documental</h4><p>Cargue, envíe y reciba documentación de forma centralizada</p></div></div>
+        <div class="login-feature-item"><div class="icon-circle">🔄</div><div><h4>Seguimiento en Tiempo Real</h4><p>Controle el estado de cada trámite desde su panel</p></div></div>
+        <div class="login-feature-item"><div class="icon-circle">🔒</div><div><h4>Acceso Seguro por Roles</h4><p>Secretarios, inspectores y autoridades regionales</p></div></div>
+        <div class="login-feature-item"><div class="icon-circle">📊</div><div><h4>Reportes y Estadísticas</h4><p>Visualice métricas de gestión institucional</p></div></div>
+      </div>
+    </div>
+    <div class="login-card">
+      <h2>Iniciar Sesión</h2>
+      <p class="login-subtitle">Ingrese sus credenciales para acceder al sistema</p>
+      <div id="login-error" class="alert alert-danger"><span>⚠️</span><span id="error-message"></span></div>
+      <div class="form-group">
+        <label for="email">Correo Electrónico</label>
+        <div class="input-icon-wrap"><span class="ic">📧</span><input type="email" id="email" placeholder="su.email@educacion.gob.ar" required></div>
+      </div>
+      <div class="form-group">
+        <label for="password">Contraseña</label>
+        <div class="input-icon-wrap"><span class="ic">🔑</span><input type="password" id="password" placeholder="Ingrese su contraseña" required><button type="button" class="toggle-pw" id="toggle-pw">👁️</button></div>
+      </div>
+      <button id="btn-login" class="btn btn-primary btn-block btn-lg"><span class="spinner"></span><span class="btn-text">Ingresar al Sistema</span></button>
+      <div style="margin-top:1.5rem;text-align:center"><p class="text-sm text-muted">¿No tiene cuenta? Contacte al administrador de su zona.</p></div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    const app = initializeApp({
+      apiKey: "AIzaSyDx51kbwTjdRL_XjbFZ352aqWGhub-eGxg",
+      authDomain: "gestion-cap.firebaseapp.com",
+      projectId: "gestion-cap",
+      storageBucket: "gestion-cap.firebasestorage.app",
+      messagingSenderId: "634447801",
+      appId: "1:634447801:web:229622aa91cc10e9d17868"
+    });
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    console.log('[CAP] Firebase inicializado OK');
+
+    // Si ya está logueado, redirigir
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        console.log('[CAP] Usuario detectado:', user.email);
+        try {
+          const snap = await getDoc(doc(db, 'usuarios', user.uid));
+          if (snap.exists() && snap.data().activo !== false) {
+            console.log('[CAP] Redirigiendo a panel...');
+            window.location.href = 'panel.html';
+          }
+        } catch(e) { console.error('[CAP] Error verificando usuario:', e); }
+      }
+    });
+
+    // Login
+    document.getElementById('btn-login').addEventListener('click', async () => {
+      const email = document.getElementById('email').value.trim();
+      const pw = document.getElementById('password').value;
+      if (!email || !pw) { showError('Complete todos los campos.'); return; }
+
+      const btn = document.getElementById('btn-login');
+      btn.classList.add('loading'); btn.disabled = true;
+      hideError();
+
+      try {
+        console.log('[CAP] Intentando login con:', email);
+        const cred = await signInWithEmailAndPassword(auth, email, pw);
+        console.log('[CAP] Auth OK, UID:', cred.user.uid);
+
+        const snap = await getDoc(doc(db, 'usuarios', cred.user.uid));
+        console.log('[CAP] Firestore doc existe:', snap.exists());
+
+        if (!snap.exists()) { await signOut(auth); showError('Usuario no registrado en el sistema. Verifique que el documento exista en Firestore.'); return; }
+        if (snap.data().activo === false) { await signOut(auth); showError('Cuenta desactivada.'); return; }
+
+        console.log('[CAP] Login exitoso! Datos:', JSON.stringify(snap.data()));
+        window.location.href = 'panel.html';
+      } catch(e) {
+        console.error('[CAP] Error login:', e.code, e.message);
+        const msgs = {
+          'auth/user-not-found':'No existe una cuenta con ese email.',
+          'auth/wrong-password':'Contraseña incorrecta.',
+          'auth/invalid-email':'Email no válido.',
+          'auth/too-many-requests':'Demasiados intentos. Intente más tarde.',
+          'auth/invalid-credential':'Credenciales inválidas. Verifique email y contraseña.',
+          'auth/network-request-failed':'Sin conexión a internet.'
+        };
+        showError(msgs[e.code] || 'Error: ' + e.message);
+      } finally { btn.classList.remove('loading'); btn.disabled = false; }
+    });
+
+    // Enter para enviar
+    document.getElementById('password').addEventListener('keyup', e => { if(e.key==='Enter') document.getElementById('btn-login').click(); });
+    document.getElementById('email').addEventListener('keyup', e => { if(e.key==='Enter') document.getElementById('password').focus(); });
+
+    // Toggle password
+    document.getElementById('toggle-pw').addEventListener('click', () => {
+      const i = document.getElementById('password');
+      i.type = i.type === 'password' ? 'text' : 'password';
+    });
+
+    function showError(msg) { const el = document.getElementById('login-error'); document.getElementById('error-message').textContent = msg; el.classList.add('show'); }
+    function hideError() { document.getElementById('login-error').classList.remove('show'); }
+  </script>
+</body>
+</html>
