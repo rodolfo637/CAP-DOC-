@@ -45,7 +45,15 @@
     import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
     import { getFirestore, doc, getDoc, collection, query, where, orderBy, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-    const app=initializeApp({apiKey:"AIzaSyDx51kbwTjdRL_XjbFZ352aqWGhub-eGxg",authDomain:"gestion-cap.firebaseapp.com",projectId:"gestion-cap",storageBucket:"gestion-cap.firebasestorage.app",messagingSenderId:"634447801",appId:"1:634447801:web:229622aa91cc10e9d17868"});
+    const app = initializeApp({
+      apiKey: "AIzaSyDx51kbwTjdRL_XjbFZ352aqWGhub-eGxg",
+      authDomain: "gestion-cap.firebaseapp.com",
+      databaseURL: "https://gestion-cap-default-rtdb.firebaseio.com",
+      projectId: "gestion-cap",
+      storageBucket: "gestion-cap.firebasestorage.app",
+      messagingSenderId: "634447801",
+      appId: "1:634447801:web:229622aa91cc10e9d17868"
+    });
     const auth=getAuth(app),db=getFirestore(app);
     const ROLES={admin:'Administrador',secretario:'Secretario/a',inspector:'Inspector/a',regional:'Autoridad Regional',director:'Director/a'};
     const TIPOS={solicitud_licencia:'Sol. Licencia',certificado_cap:'Cert. CAP',nota_elevacion:'Nota Elevación',informe:'Informe',resolucion:'Resolución',acta:'Acta',memorandum:'Memorándum',circular:'Circular',disposicion:'Disposición',otro:'Otro'};
