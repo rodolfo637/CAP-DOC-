@@ -106,7 +106,7 @@
       if (user) {
         console.log('[CAP] Usuario detectado:', user.email);
         try {
-          const snap = await getDoc(doc(db, 'usuaríos', user.uid));
+          const snap = await getDoc(doc(db, 'usuarios', user.uid));
           if (snap.exists() && snap.data().activo !== false) {
             console.log('[CAP] Redirigiendo a panel...');
             window.location.href = 'panel.html';
@@ -130,7 +130,7 @@
         const cred = await signInWithEmailAndPassword(auth, email, pw);
         console.log('[CAP] Auth OK, UID:', cred.user.uid);
 
-        const snap = await getDoc(doc(db, 'usuaríos', cred.user.uid));
+        const snap = await getDoc(doc(db, 'usuarios', cred.user.uid));
         console.log('[CAP] Firestore doc existe:', snap.exists());
 
         if (!snap.exists()) { await signOut(auth); showError('Usuario no registrado en el sistema. Verifique que el documento exista en Firestore.'); return; }
